@@ -124,3 +124,19 @@ ava.test('should accept a multi word prefix', (test) => {
     baz: 'qux'
   })
 })
+
+ava.test('should not care about case', (test) => {
+  test.deepEqual(envObjectParser({
+    foo_CONFIGURATION__Foo__BAR: 'baz',
+    FOO_configuration__foo__hello: 'world'
+  }, {
+    prefix: 'fOo'
+  }), {
+    configuration: {
+      foo: {
+        bar: 'baz',
+        hello: 'world'
+      }
+    }
+  })
+})
